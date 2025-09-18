@@ -225,6 +225,14 @@ public class Main {
         String asciiString = convertToAscii(originalText22);
         System.out.println("Uppgift 22: Ursprunglig sträng: '" + originalText22 + "'");
         System.out.println("Uppgift 22: Sträng med ASCII-värden: '" + asciiString + "'");
+
+        System.out.println("---");
+
+        // Uppgift 23
+        String originalText23 = "Detta är en testmening.";
+        String replacedText = replaceVowelsWithStars(originalText23);
+        System.out.println("Uppgift 23: Ursprunglig sträng: '" + originalText23 + "'");
+        System.out.println("Uppgift 23: Sträng med ersatta vokaler: '" + replacedText + "'");
     }
 
     //----------
@@ -480,5 +488,25 @@ public class Main {
         }
 
         return result.toString().trim();
+    }
+
+    // Replace Vowel With Stars
+    public static String replaceVowelsWithStars(String text) {
+        if (text == null || text.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder result = new StringBuilder();
+        String vowels = "aeiouyåäöAEIOUYÅÄÖ";
+
+        for (int i = 0; i < text.length(); i++) {
+            char character = text.charAt(i);
+            if (vowels.indexOf(character) != -1) {
+                result.append('*');
+            } else {
+                result.append(character);
+            }
+        }
+        return result.toString();
     }
 }
