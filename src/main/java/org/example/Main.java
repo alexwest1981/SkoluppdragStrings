@@ -217,6 +217,14 @@ public class Main {
         String swappedSentence = swapFirstAndLast(originalSentence21);
         System.out.println("Uppgift 21: Ursprunglig mening: '" + originalSentence21 + "'");
         System.out.println("Uppgift 21: Meningen med bytta bokstäver: '" + swappedSentence + "'");
+
+        System.out.println("---");
+
+        // Uppgift 22
+        String originalText22 = "Java";
+        String asciiString = convertToAscii(originalText22);
+        System.out.println("Uppgift 22: Ursprunglig sträng: '" + originalText22 + "'");
+        System.out.println("Uppgift 22: Sträng med ASCII-värden: '" + asciiString + "'");
     }
 
     //----------
@@ -455,6 +463,22 @@ public class Main {
                 result.append(last).append(middle).append(first).append(" ");
             }
         }
+        return result.toString().trim();
+    }
+
+    public static String convertToAscii(String text) {
+        if (text == null || text.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < text.length(); i++) {
+            char character = text.charAt(i);
+            int asciiValue = (int) character;
+            result.append(asciiValue).append(" ");
+        }
+
         return result.toString().trim();
     }
 }
