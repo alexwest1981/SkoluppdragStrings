@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.HashSet;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -270,6 +272,22 @@ public class Main {
         System.out.println("Uppgift 26: Är '" + invalidIp1 + "' en giltig IP? " + isValidIpAddress(invalidIp1));
         System.out.println("Uppgift 26: Är '" + invalidIp2 + "' en giltig IP? " + isValidIpAddress(invalidIp2));
         System.out.println("Uppgift 26: Är '" + invalidIp3 + "' en giltig IP? " + isValidIpAddress(invalidIp3));
+
+        System.out.println("---");
+
+        // Uppgift 27
+        String text27 = "Min katt heter Lisa och är söt.";
+        String replacedConsonantsText = replaceConsonantsWithNextVowel(text27);
+        System.out.println("Uppgift 27: Ursprunglig sträng: '" + text27 + "'");
+        System.out.println("Uppgift 27: Sträng med ersatta konsonanter: '" + replacedConsonantsText + "'");
+
+        System.out.println("---");
+
+        // Uppgift 28
+        String text28 = "programmering";
+        String uniqueCharactersText = removeDuplicates(text28);
+        System.out.println("Uppgift 28: Ursprunglig sträng: '" + text28 + "'");
+        System.out.println("Uppgift 28: Sträng utan dubbla tecken: '" + uniqueCharactersText + "'");
     }
 
     //----------
@@ -638,5 +656,81 @@ public class Main {
         Matcher matcher = pattern.matcher(ipAdress);
 
         return matcher.matches();
+    }
+
+    // Replace Consonants
+    public static String replaceConsonantsWithNextVowel(String text) {
+        if (text == null || text.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder result = new StringBuilder();
+        String vowels = "aeiouyåäö";
+        String allVowels = vowels + vowels.toUpperCase();
+
+        for (char c : text.toCharArray()) {
+            if (allVowels.indexOf(c) != -1) {
+                // Om det är en vokal, lägg till den som den är
+                result.append(c);
+            } else if (Character.isLetter(c)) {
+                // Om det är en konsonant, hitta nästa vokal
+                char lowerCaseChar = Character.toLowerCase(c);
+                int vowelIndex = 0;
+                char nextVowel = ' ';
+
+                // Vi hittar en näst-bäst matchning (nästa vokal)
+                if (lowerCaseChar >= 'a' && lowerCaseChar < 'e') {
+                    nextVowel = (Character.isUpperCase(c)) ? 'E' : 'e';
+                } else if (lowerCaseChar >= 'e' && lowerCaseChar < 'i') {
+                    nextVowel = (Character.isUpperCase(c)) ? 'I' : 'i';
+                } else if (lowerCaseChar >= 'i' && lowerCaseChar < 'o') {
+                    nextVowel = (Character.isUpperCase(c)) ? 'O' : 'o';
+                } else if (lowerCaseChar >= 'o' && lowerCaseChar < 'u') {
+                    nextVowel = (Character.isUpperCase(c)) ? 'U' : 'u';
+                } else if (lowerCaseChar >= 'u' && lowerCaseChar < 'y') {
+                    nextVowel = (Character.isUpperCase(c)) ? 'Y' : 'y';
+                } else if (lowerCaseChar >= 'y' && lowerCaseChar < 'å') {
+                    nextVowel = (Character.isUpperCase(c)) ? 'Å' : 'å';
+                } else if (lowerCaseChar >= 'å' && lowerCaseChar < 'ä') {
+                    nextVowel = (Character.isUpperCase(c)) ? 'Ä' : 'ä';
+                } else if (lowerCaseChar >= 'ä' && lowerCaseChar < 'ö') {
+                    nextVowel = (Character.isUpperCase(c)) ? 'Ö' : 'ö';
+                } else {
+                    nextVowel = (Character.isUpperCase(c)) ? 'A' : 'a';
+                }
+                result.append(nextVowel);
+            } else {
+                // Om det inte är en bokstav, lägg till det som det är, t ex en siffra
+                result.append(c);
+            }
+        }
+
+        return result.toString();
+    }
+
+    // Remove duplicates
+    public static String removeDuplicates(String text) {
+        if (text == null || text.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder result = new StringBuilder();
+        HashSet<Character> seenCharacters = new HashSet<>();
+
+        for (char character : text.toCharArray()) {
+            if (seenCharacters.add(character)) {
+                // 'add' returnerar true om tecknet lades till, cvs om det är unikt
+                result.append(character);
+            }
+        }
+
+        return result.toString();
+    }
+
+    // Sortera alfabetiskt
+    public static String sortWordsAlphabetically(String text) {
+        if (text == null || text.isEmpty()) {
+            return "";
+        }
     }
 }
