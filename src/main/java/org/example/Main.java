@@ -288,6 +288,22 @@ public class Main {
         String uniqueCharactersText = removeDuplicates(text28);
         System.out.println("Uppgift 28: Ursprunglig sträng: '" + text28 + "'");
         System.out.println("Uppgift 28: Sträng utan dubbla tecken: '" + uniqueCharactersText + "'");
+
+        System.out.println("---");
+
+        // Uppgift 29
+        String text29 = "Detta är en testmening med ord som ska sorteras";
+        String sortedWordsText = sortWordsAlphabetically(text29);
+        System.out.println("Uppgift 29: Ursprunglig sträng: '" + text29 + "'");
+        System.out.println("Uppgift 29: Sträng med sorterade ord: '" + sortedWordsText + "'");
+
+        System.out.println("---");
+
+        // Uppgift 30
+        String text30 = "Java är ett programmeringsspråk";
+        String sortedByLengthText = sortWordsByLength(text30);
+        System.out.println("Uppgift 30: Ursprunglig sträng: '" + text30 + "'");
+        System.out.println("Uppgift 30: Sträng med ord sorterade efter längd: '" + sortedByLengthText + "'");
     }
 
     //----------
@@ -732,5 +748,31 @@ public class Main {
         if (text == null || text.isEmpty()) {
             return "";
         }
+
+        String[] words = text.split(" ");
+        Arrays.sort(words);
+
+        StringBuilder result = new StringBuilder();
+        for (String word : words) {
+            result.append(word).append(" ");
+        }
+
+        return result.toString().trim();
+    }
+
+    // Sortera efter längd
+    public static String sortWordsByLength(String text) {
+        if (text == null || text.isEmpty()) {
+            return "";
+        }
+        String[] words = text.split(" ");
+        Arrays.sort(words, (a, b) -> Integer.compare(a.length(), b.length()));
+
+        StringBuilder result = new StringBuilder();
+        for (String word : words) {
+            result.append(word).append(" ");
+        }
+
+        return result.toString().trim();
     }
 }
