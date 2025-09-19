@@ -257,6 +257,19 @@ public class Main {
         for (Map.Entry<Character, Integer> entry : frequency.entrySet()) {
             System.out.println("'" + entry.getKey() + " - " + entry.getValue() + " gånger");
         }
+
+        System.out.println("---");
+
+        // Uppgift 26
+        String validIp = "192.168.1.1";
+        String invalidIp1 = "256.100.200.300"; // Siffror för höga
+        String invalidIp2 = "123.45.67"; // För få oktetter
+        String invalidIp3 = "123.45.67.89.10"; // För många oktetter
+
+        System.out.println("Uppgift 26: Är '" + validIp + "' en giltig IP? " + isValidIpAddress(validIp));
+        System.out.println("Uppgift 26: Är '" + invalidIp1 + "' en giltig IP? " + isValidIpAddress(invalidIp1));
+        System.out.println("Uppgift 26: Är '" + invalidIp2 + "' en giltig IP? " + isValidIpAddress(invalidIp2));
+        System.out.println("Uppgift 26: Är '" + invalidIp3 + "' en giltig IP? " + isValidIpAddress(invalidIp3));
     }
 
     //----------
@@ -610,7 +623,7 @@ public class Main {
     }
 
     // Valid Ip-adress
-    public static boolean isValidIpAdress(String ipAdress) {
+    public static boolean isValidIpAddress(String ipAdress) {
         if (ipAdress == null || ipAdress.isEmpty()) {
             return false;
         }
