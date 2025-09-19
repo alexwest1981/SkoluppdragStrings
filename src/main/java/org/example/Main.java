@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -233,6 +235,28 @@ public class Main {
         String replacedText = replaceVowelsWithStars(originalText23);
         System.out.println("Uppgift 23: Ursprunglig sträng: '" + originalText23 + "'");
         System.out.println("Uppgift 23: Sträng med ersatta vokaler: '" + replacedText + "'");
+
+        System.out.println("---");
+
+        // Uppgift 24
+        String isbn10_valid = "0-306-40615-2";
+        String isbn10_invalid = "0-306-40615-X";
+        String isbn13_valid = "978-0-306-40615-7";
+        String isbn13_invalid = "978-0-306-40615-8";
+        System.out.println("Uppgift 24: Är '" + isbn10_valid + "' en giltig ISBN? " + isValidIsbn(isbn10_valid));
+        System.out.println("Uppgift 24: Är '" + isbn10_invalid + "' en giltig ISBN? " + isValidIsbn(isbn10_invalid));
+        System.out.println("Uppgift 24: Är '" + isbn13_valid + "' en giltig ISBN? " + isValidIsbn(isbn13_valid));
+        System.out.println("Uppgift 24: Är '" + isbn13_invalid + "' en giltig ISBN? " + isValidIsbn(isbn13_invalid));
+
+        System.out.println("---");
+
+        // Uppgift 25
+        String text25 = "programmering";
+        Map<Character, Integer> frequency = countCharacterFrequency(text25);
+        System.out.println("Uppgift 25: Teckenfrekvens för '" + text25 + "'");
+        for (Map.Entry<Character, Integer> entry : frequency.entrySet()) {
+            System.out.println("'" + entry.getKey() + " - " + entry.getValue() + " gånger");
+        }
     }
 
     //----------
@@ -508,5 +532,98 @@ public class Main {
             }
         }
         return result.toString();
+    }
+
+    // Valid ISBN
+    public static boolean isValidIsbn(String isbn) {
+        if (isbn == null || isbn.isEmpty()) {
+            return false;
+        }
+
+        // Ta bort alla bindestreck och mellanslag
+        String cleanedIsbn = isbn.replace("-", "").replace(" ", "");
+
+        //Validera ISBN-10
+        if (cleanedIsbn.length() == 10) {
+            int sum =0;
+            for (int i = 0; i < 9; i++) {
+                char c =  cleanedIsbn.charAt(i);
+                if (!Character.isDigit(c)) {
+                    return false;
+                }
+                int digit = Character.getNumericValue(c);
+                sum += (10 - 1) * digit;
+            }
+
+            char lastChar = cleanedIsbn.charAt(9);
+            if (Character.isDigit(lastChar)) {
+                sum += Character.getNumericValue(lastChar);
+            } else if (lastChar == 'x' || lastChar == 'X') {
+                sum += 10;
+            } else {
+                return false;
+            }
+            return (sum % 11 == 0);
+        }
+
+        // Validera ISBN-13
+        if (cleanedIsbn.length() == 13) {
+            int sum = 0;
+            for (int i = 0; i < 12; i++) {
+                char c = cleanedIsbn.charAt(i);
+                if (!Character.isDigit(c)) {
+                    return false;
+                }
+                int digit = Character.getNumericValue(c);
+                if (i % 2 == 0) {
+                    sum += digit;
+                } else {
+                    sum += digit * 3;
+                }
+            }
+
+            char lastChar = cleanedIsbn.charAt(12);
+            if (!Character.isDigit(lastChar)) {
+                return false;
+            }
+            int lastDigit = Character.getNumericValue(lastChar);
+
+            return ((sum + lastDigit) % 10 == 0);
+        }
+
+        // Returnera om längden inte är 10 eller 13
+        return false;
+    }
+
+    // Hashmap (nej, inte 420)
+    public static Map<Character, Integer> countCharacterFrequency(String text) {
+        if (text == null || text.isEmpty()) {
+            return new HashMap<>();
+        }
+
+        Map<Character, Integer> frequencyMap = new HashMap<>();
+        for (char character : text.toCharArray()) {
+            frequencyMap.put(character, frequencyMap.getOrDefault(character, 0) + 1);
+        }
+
+        return frequencyMap;
+    }
+
+    // Valid Ip-adress
+    public static boolean isValidIpAdress(String ipAdress) {
+        if (ipAdress == null || ipAdress.isEmpty()) {
+            return false;
+        }
+
+        // Reguljärt uttryck för att matcha en IPv4-adress
+        String regex = "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
+                "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
+                "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
+                "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(ipAdress);
+
+        return matcher.matches();
     }
 }
