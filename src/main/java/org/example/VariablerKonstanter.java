@@ -170,8 +170,70 @@ public class VariablerKonstanter {
         System.out.println("---");
 
         // Test av lättare uppgift 23
-        int originalNumber = 10;
-        int doubledNumber = originalNumber * 2;
+        int numberForTask23 = 10;
+        int doubledNumber = numberForTask23 * 2;
         System.out.println("Lättare uppgift 23: Det dubblade värdet är: " + doubledNumber);
+
+        System.out.println("---");
+
+        // Test av lättare uppgift 24
+        final String LANGUAGE = "Java";
+        String description = LANGUAGE + " är ett kraftfullt programmeringsspråk.";
+        System.out.println("Lättare uppgift 24: Den nya strängen är: " + description);
+
+        System.out.println("---");
+
+        // Test av lättare uppgift 25
+        int num1 = 10;
+        int num2 = 15;
+        int num3 = 20;
+        boolean comparisonResult = (num1 < num2 && num2 < num3);
+        System.out.println("Lättare uppgift 25: Är villkoret uppfyllt? " + comparisonResult);
+
+        System.out.println("---");
+
+        // Test av lättare uppgift 26
+        char originalChar26 = 'a';
+        char swappedChar26;
+
+        if (Character.isLowerCase(originalChar26)) {
+            swappedChar26 = Character.toUpperCase(originalChar26);
+        } else {
+            swappedChar26 = Character.toLowerCase(originalChar26);
+        }
+
+        System.out.println("Lättare uppgift 26: Originaltecken: " + originalChar26);
+        System.out.println("Lättare uppgift 26: Skiftläge bytt: " + swappedChar26);
+
+        System.out.println("---");
+
+        // Test av lättare uppgift 27
+        String part1 = "Hej";
+        String part2 = "världen";
+        String completeSentence = part1 + " " + part2;
+        System.out.println("Lättare uppgift 27: Den nya strängen är: " + completeSentence);
+
+        System.out.println("---");
+
+        // Test av lättare uppgift 28
+        int number28 = 10;
+        int remainder28 = number28 % 3;
+        System.out.println("Lättare uppgift 28: Resten av 10 / 3 är: " + remainder28);
+
+        System.out.println("---");
+
+        // Test av lättare uppgift 29
+        final int NUMBER_TO_ADD = 7;
+        int currentNumber = 13;
+        int newNumber = currentNumber + NUMBER_TO_ADD;
+        System.out.println("Lättare uppgift 29: Det nya värdet är: " + newNumber);
+
+        System.out.println("---");
+
+        // Test av lättare uppgift 30
+        int x = 50;
+        int y = 50;
+        boolean areTheSame = (x == y);
+        System.out.println("Lättare uppgift 30: Är x och y lika? " + areTheSame);
     }
 }
