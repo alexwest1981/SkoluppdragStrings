@@ -173,6 +173,27 @@ public class AdvancedExercisesVariables {
         String shuffledSentence = shuffleWords(testString18);
         System.out.println("Avancerad uppgift 18: Ursprunglig sträng: '" + testString18 + "'");
         System.out.println("Avancerad uppgift 18: Slumpmässig ordning: '" + shuffledSentence + "'");
+
+        System.out.println("---");
+
+        // Test av Avancerad uppgift 19
+        String testString19 = "Detta är en testmening.";
+        String reversedOrderString19 = reverseWordOrder19(testString19);
+        System.out.println("Avancerad uppgift 19: Ursprunglig sträng: '" + testString19 + "'");
+        System.out.println("Avancerad uppgift 19: Sträng med omvänd ordning: '" + reversedOrderString19 + "'");
+
+        System.out.println("---");
+
+        // Test av Avancerad uppgift 20
+        String strA = "waterbottle";
+        String strB = "erbottlewat";
+        boolean isRotationResult1 = isRotation(strA, strB);
+        System.out.println("Avancerad uppgift 20: Är '" + strB + "' en rotation av '" + strA + "'? " + isRotationResult1);
+
+        String strC = "hello";
+        String strD = "world";
+        boolean isRotationResult2 = isRotation(strC, strD);
+        System.out.println("Avancerad uppgift 20: Är '" + strD + "' en rotation av '" + strC + "'? " + isRotationResult2);
     }
 
 
@@ -448,5 +469,31 @@ public class AdvancedExercisesVariables {
         }
 
         return shuffledSentence.toString().trim();
+    }
+
+    // Avancerad uppgift 19
+    public static String reverseWordOrder19(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return "";
+        }
+
+        String[] words = text.trim().split("\\s+");
+        StringBuilder reversedSentence = new StringBuilder();
+
+        for (int i = words.length - 1; i >= 0; i--) {
+            reversedSentence.append(words[i]).append(" ");
+        }
+
+        return reversedSentence.toString().trim();
+    }
+
+    // Avancerad uppgift 20
+    public static boolean isRotation(String str1, String str2) {
+        if (str1 == null || str2 == null || str1.length() != str2.length() || str1.isEmpty()) {
+            return false;
+        }
+
+        String concatenatedString = str1 + str1;
+        return concatenatedString.contains(str2);
     }
 }
