@@ -47,33 +47,7 @@ public class Card {
     }
 
     // Den visuella representationen av kortet
-    /*@Override
-    public String toString() {
-        String cardTop = "┌───────────┐";
-        String cardBottom = "└───────────┘";
-
-        // Formatera valören
-        String rankName = rank.name();
-        String rankLine = String.format("│ %-9s │", rankName);
-
-        // Formatera symbolen
-        String suitSymbol = suit.symbol;
-        String suitLine = String.format("│     %s     │", suitSymbol);
-
-        return cardTop + "\n" + rankLine + "\n" + suitLine + "\n" + cardBottom;
-    @Override
-    public String toString() {
-        String cardTop = "┌─────────┐";
-        String cardBottom = "└─────────┘";
-
-        // Formatera valören
-        String rankLine = String.format("│ %-7s │", rank.name());
-
-        // Formatera symbolen
-        String suitLine = String.format("│    %s    │", suit.symbol);
-
-        return cardTop + "\n" + rankLine + "\n" + suitLine + "\n" + cardBottom;
-    }*/
+    // I din Card.java-fil
     @Override
     public String toString() {
         return "[" + rank.name() + " " + suit.symbol + "]";
