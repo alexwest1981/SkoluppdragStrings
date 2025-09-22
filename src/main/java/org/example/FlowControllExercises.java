@@ -315,7 +315,10 @@ public class FlowControllExercises {
 
         System.out.println("Summan av de första " + n3 + " talen är: " + sumForLoop);
 
+        System.out.println("---");
+
         // For-loopar: Övning 4
+        System.out.println("For-loopar Övning 4");
         System.out.println("Skapar en stjärntriangel:");
 
         for (int row = 1; row <= 5; row++) {
