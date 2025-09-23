@@ -492,7 +492,7 @@ public class ArrayExercises {
         System.out.println("---");
 
         // Arrayövning 31
-        String[] strings31 = {"hej", "på", "dig", "jag", "heter", "Gemini", "och", "är", "en", "AI"};
+        String[] strings31 = {"hej", "på", "dig", "jag", "heter", "Alex", "och", "är", "en", "man"};
         int totalLength = 0;
 
         for (String word : strings31) {

@@ -28,7 +28,7 @@ public class Hand {
 
         for (Card card : cards) {
             value += card.getValue();
-            if (card.getRank() == Card.Rank.ACE) {
+            if (card.getRank() == Card.Rank.ESS) {
                 aceCount++;
             }
         }

@@ -14,8 +14,8 @@ public class Card {
     }
 
     public enum Rank {
-        TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10),
-        JACK(10), QUEEN(10), KING(10), ACE(11);
+        TVÅ(2), TRE(3), FYRA(4), FEM(5), SEX(6), SJU(7), ÅTTA(8), NIO(9), TIO(10),
+        KNEKT(10), DROTTNING(10), KUNG(10), ESS(11);
 
         public final int value;
 
