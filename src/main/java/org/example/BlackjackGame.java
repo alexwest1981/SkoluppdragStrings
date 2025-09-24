@@ -13,7 +13,7 @@ public class BlackjackGame {
         System.out.println("-------------------------------------");
 
         int playerBankroll = 1000;
-        boolean playAgain = true; // FIXAT: Startar loopen korrekt
+        boolean playAgain = true;
 
         while (playAgain && playerBankroll > 0) {
             playerBankroll = playRound(playerBankroll);
@@ -42,7 +42,7 @@ public class BlackjackGame {
         }
 
         Hand playerHand = new Hand();
-        Hand dealerHand = new Hand(); // FIXAT: Typo i variabelnamn
+        Hand dealerHand = new Hand();
         dealInitialCards(playerHand, dealerHand);
 
         printInitialHands(playerHand, dealerHand);
@@ -55,7 +55,7 @@ public class BlackjackGame {
         }
 
         for (int i = 0; i < playerHands.size(); i++) {
-            playPlayerTurn(playerHands.get(i), i + 1);
+            playPlayerTurn(playerHands.get(i), i + 1, playerBet, playerBankroll);
         }
 
         playDealerTurn(dealerHand);
@@ -115,7 +115,7 @@ public class BlackjackGame {
             if (playerBet * 2 > playerBankroll) {
                 System.out.println("Du har inte tillräckligt med pengar för att splitta. Fortsätter med en hand.");
             } else {
-                Hand playerHand2 = new Hand(); // FIXAT: Korrekt variabelnamn
+                Hand playerHand2 = new Hand();
                 playerHand2.addCard(playerHands.get(0).removeCard());
 
                 playerHands.get(0).addCard(deck.dealCard());
@@ -129,21 +129,40 @@ public class BlackjackGame {
         return playerBankroll;
     }
 
-    private static void playPlayerTurn(Hand hand, int handNumber) {
+    private static void playPlayerTurn(Hand hand, int handNumber, int playerBet, int playerBankroll) {
         if (hand.getValue() == 21 && hand.getCards().size() == 2) {
             System.out.println("Blackjack! Din hand #" + handNumber + " har 21!");
             return;
         }
 
-        System.out.println("Din hand #" + handNumber + ":");
+        System.out.println("\nDin hand #" + handNumber + ":");
         System.out.println(hand.getHandString(true));
         System.out.println("Poäng: " + hand.getValue());
 
         while (true) {
-            System.out.print("Ditt val (dra/stanna): "); // FIXAT: Lade till en ')'
+            String prompt = "Ditt val (dra/stanna): ";
+            if (hand.getCards().size() == 2 && playerBankroll >= playerBet * 2) {
+                prompt = "Ditt val (dubbla/dra/stanna): ";
+            }
+
+            System.out.print(prompt);
             String playerChoice = scanner.next();
 
-            if (playerChoice.equalsIgnoreCase("dra")) {
+            if (playerChoice.equalsIgnoreCase("dubbla") && hand.getCards().size() == 2) {
+                if (playerBankroll < playerBet * 2) {
+                    System.out.println("Inte tillräckligt med pengar för att dubbla ner.");
+                    continue;
+                }
+
+                hand.setWasDoubled(true);
+                hand.addCard(deck.dealCard());
+                System.out.println("\nDin hand #" + handNumber + ":");
+                System.out.println(hand.getHandString(true));
+                System.out.println("Poäng: " + hand.getValue());
+                System.out.println("Du dubblar ner! Turen är slut.");
+                break;
+
+            } else if (playerChoice.equalsIgnoreCase("dra")) {
                 hand.addCard(deck.dealCard());
                 System.out.println("\nDin hand #" + handNumber + ":");
                 System.out.println(hand.getHandString(true));
@@ -157,7 +176,7 @@ public class BlackjackGame {
                 System.out.println("Du stannar.");
                 break;
             } else {
-                System.out.println("Ogiltigt val. Vänligen skriv 'dra' eller 'stanna'.");
+                System.out.println("Ogiltigt val.");
             }
         }
     }
@@ -185,27 +204,37 @@ public class BlackjackGame {
     }
 
     private static int determineWinner(Hand playerHand, Hand dealerHand, int playerBet, int playerBankroll, int handNumber) {
-        System.out.println("\nHand #" + handNumber + ":");
+        int finalBet = playerBet; // Använd en variabel för den slutliga satsningen
+
+        // NY LOGIK FÖR "DUBBLA NER"
+        if (playerHand.getWasDoubled()) {
+            finalBet *= 2;
+            System.out.println("\nHand #" + handNumber + ": Dubblad satsning på " + finalBet + " kr.");
+        } else {
+            System.out.println("\nHand #" + handNumber + ":");
+        }
+        // SLUT NY LOGIK
+
         System.out.println("Din poäng: " + playerHand.getValue());
         System.out.println("Dealerns poäng: " + dealerHand.getValue());
 
         if (playerHand.getValue() > 21) {
-            System.out.println("Du blev tjock! Du förlorar " + playerBet + " kr.");
-            playerBankroll -= playerBet;
+            System.out.println("Du blev tjock! Du förlorar " + finalBet + " kr.");
+            playerBankroll -= finalBet;
         } else if (dealerHand.getValue() > 21) {
-            System.out.println("Dealern blev tjock! Du vinner " + playerBet + " kr!");
-            playerBankroll += playerBet;
+            System.out.println("Dealern blev tjock! Du vinner " + finalBet + " kr!");
+            playerBankroll += finalBet;
         } else if (playerHand.getValue() > dealerHand.getValue()) {
             if (playerHand.getValue() == 21 && playerHand.getCards().size() == 2) {
-                System.out.println("Blackjack! Du vinner " + (playerBet * 1.5) + " kr!");
-                playerBankroll += (playerBet * 1.5); // FIXAT: Adderar vinsten istället för att subtrahera
+                System.out.println("Blackjack! Du vinner " + (finalBet * 1.5) + " kr!");
+                playerBankroll += (finalBet * 1.5);
             } else {
-                System.out.println("Du vinner " + playerBet + " kr!");
-                playerBankroll += playerBet;
+                System.out.println("Du vinner " + finalBet + " kr!");
+                playerBankroll += finalBet;
             }
         } else if (dealerHand.getValue() > playerHand.getValue()) {
-            System.out.println("Dealern vinner. Du förlorar " + playerBet + " kr.");
-            playerBankroll -= playerBet;
+            System.out.println("Dealern vinner. Du förlorar " + finalBet + " kr.");
+            playerBankroll -= finalBet;
         } else {
             System.out.println("Oavgjort! Ingen vinner eller förlorar.");
         }

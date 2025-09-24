@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Hand {
     private final List<Card> cards;
+    private boolean wasDoubled = false; // NY VARIABEL
 
     public Hand() {
         this.cards = new ArrayList<>();
@@ -21,6 +22,16 @@ public class Hand {
     public List<Card> getCards() {
         return cards;
     }
+
+    // NYA METODER
+    public void setWasDoubled(boolean value) {
+        this.wasDoubled = value;
+    }
+
+    public boolean getWasDoubled() {
+        return wasDoubled;
+    }
+    // SLUT NYA METODER
 
     public int getValue() {
         int value = 0;
